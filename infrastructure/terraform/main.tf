@@ -62,7 +62,7 @@ resource "aws_iam_role" "lambda_exec" {
   })
 }
 
-# Lambda function
+# Lambda function - Hello World
 resource "aws_lambda_function" "hello_world" {
   function_name = "repertory-hello-world"
   role          = aws_iam_role.lambda_exec.arn
@@ -70,6 +70,22 @@ resource "aws_lambda_function" "hello_world" {
   runtime       = "python3.11"
   
   filename      = "../../backend/lambda/hello-world.zip"
+  
+  environment {
+    variables = {
+      ENV = "dev"
+    }
+  }
+}
+
+# Lambda function - Get User Repertoire
+resource "aws_lambda_function" "get-user-rep" {
+  function_name = "repertory-get-user-repd"
+  role          = aws_iam_role.lambda_exec.arn
+  handler       = "index.lambda_handler"
+  runtime       = "python3.11"
+  
+  filename      = "../../backend/lambda/get-user-rep.zip"
   
   environment {
     variables = {
